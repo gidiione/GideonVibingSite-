@@ -1,0 +1,112 @@
+<html lang="en"> 
+ <head><style type="text/css" id="dcoder_stylesheet">body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 50px;
+}
+input {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    width: 80%;
+}
+button {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: blue;
+    color: white;
+    border: none;
+}</style></head> 
+ <body>
+   /GideonVibingSite ├── index.html (Homepage) ├── login.html (Login Page) ├── signup.html (Signup Page) ├── dashboard.html (After login page) ├── style.css (Styling) ├── script.js (Handles authentication) ├── images/ (For images if needed) ├── assets/ (For extra files if needed) 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>GideonVibingSite</title> 
+  <link rel="stylesheet" href="style.css"> 
+  <h1>Welcome to GideonVibingSite</h1> 
+  <p>Login or Sign Up to access exclusive content.</p> <a href="login.html">Login</a> | <a href="signup.html">Sign Up</a> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Signup</title> 
+  <link rel="stylesheet" href="style.css"> 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script> 
+  <h2>Sign Up</h2> 
+  <input type="email" id="signupEmail" placeholder="Enter email"> 
+  <input type="password" id="signupPassword" placeholder="Enter password"> <button onclick="signUp()">Sign Up</button> 
+  <p>Already have an account? <a href="login.html">Login</a></p> 
+  <script>
+        const supabase = supabase.createClient(
+            'https://vnycgnbkjfoyumcybuzv.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZueWNnbmJramZveXVtY3lidXp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA2NTkyNzAsImV4cCI6MjA1NjIzNTI3MH0.-azfFxug7zMoBdMMbJZtDlgCVQepkbFF3QPxB_zFr30'  
+        );
+
+        async function signUp() {
+            let email = document.getElementById('signupEmail').value;
+            let password = document.getElementById('signupPassword').value;
+
+            let { user, error } = await supabase.auth.signUp({
+                email: email,
+                password: password
+            });
+
+            if (error) {
+                alert("Signup failed: " + error.message);
+            } else {
+                alert("Signup successful! Please check your email to confirm.");
+                window.location.href = "login.html";
+            }
+        }
+    </script> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Login</title> 
+  <link rel="stylesheet" href="style.css"> 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script> 
+  <h2>Login</h2> 
+  <input type="email" id="loginEmail" placeholder="Enter email"> 
+  <input type="password" id="loginPassword" placeholder="Enter password"> <button onclick="login()">Login</button> 
+  <p>Don't have an account? <a href="signup.html">Sign Up</a></p> 
+  <script>
+        const supabase = supabase.createClient(
+            'https://vnycgnbkjfoyumcybuzv.supabase.co',
+            ''
+        );
+
+        async function login() {
+            let email = document.getElementById('loginEmail').value;
+            let password = document.getElementById('loginPassword').value;
+
+            let { user, error } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: password
+            });
+
+            if (error) {
+                alert("Login failed: " + error.message);
+            } else {
+                alert("Login successful!");
+                window.location.href = "dashboard.html";
+            }
+        }
+    </script> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Dashboard</title> 
+  <link rel="stylesheet" href="style.css"> 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script> 
+  <h2>Welcome to Your Dashboard</h2> 
+  <p>Here is your exclusive content!</p> <button onclick="logout()">Logout</button> 
+  <script>
+        const supabase = supabase.createClient(
+            'https://your-supabase-url.supabase.co',
+            'your-anon-public-key'
+        );
+
+        async function logout() {
+            await supabase.auth.signOut();
+            alert("Logged out successfully!");
+            window.location.href = "index.html";
+        }
+    </script> 
+ 
+</body></html>
